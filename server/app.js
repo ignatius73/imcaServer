@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 
 
-mongo.connect(process.env.urlDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+mongo.connect(process.env.URLDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 const db = mongo.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
