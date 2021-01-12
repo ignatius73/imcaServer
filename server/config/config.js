@@ -7,8 +7,8 @@ let mongoURL;
 if (process.env.NODE_ENV === "dev") {
     mongoURL = 'mongodb://localhost:27017/usuario';
 } else {
-    let password = encodeURIComponent('Bb#D$F%.1973?');
-    mongoURL = `mongodb+srv://ignatius73:${password}@cluster0.j7iqv.mongodb.net/imca-app?retryWrites=true&w=majority`;
+
+    mongoURL = process.env.mongo_uri;
 }
 
 process.env.URLDB = mongoURL;
