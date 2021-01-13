@@ -1,5 +1,7 @@
 require('./config/config');
 
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongo = require('mongoose');
@@ -11,7 +13,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
-app.use(require('./rutas/usuario'));
+app.use(require('./rutas/index'));
+
+
 // parse application/x-www-form-urlencoded
 
 

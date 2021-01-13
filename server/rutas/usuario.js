@@ -2,11 +2,12 @@ const express = require('express');
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
+const { verificaToken, verificaRol } = require('../middlewares/authentication');
 const app = express();
 
 
 
-app.get('/usuario', (req, res) => {
+app.get('/usuario', verificaToken, (req, res) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
     let limite = req.query.limite || 0;
@@ -21,7 +22,7 @@ app.get('/usuario', (req, res) => {
                     ok: false,
                     err
                 });
-            Usuario.count({ estado: true }, (err, cuantos) => {
+            Usuario.countDocuments({ estado: true }, (err, cuantos) => {
                 res.json({
                     ok: true,
                     usuarios,
@@ -35,8 +36,8 @@ app.get('/usuario', (req, res) => {
 });
 
 
-app.post('/usuario', (req, res) => {
-    console.log(req.body);
+app.post('/usuario', [verificaToken, verificaRol], (req, res) => {
+
     let body = req.body;
 
     let usuario = new Usuario({
@@ -56,7 +57,7 @@ app.post('/usuario', (req, res) => {
                 ok: false,
                 err
             });
-        let user = _.pick(UsuarioDB, ['nombre', 'edad', 'direccion', 'email']);
+        let user = _.pick(UsuarioDB, ['nombre', 'edad', 'direccion', 'email', '_id']);
         res.json({
             user
         });
@@ -64,7 +65,7 @@ app.post('/usuario', (req, res) => {
 
 });
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaRol], (req, res) => {
     let body = req.body;
     let id = req.params.id;
     let user = _.pick(body, ['nombre', 'edad', 'direccion']);
@@ -74,7 +75,7 @@ app.put('/usuario/:id', (req, res) => {
                 ok: false,
                 err
             });
-        let user = _.pick(UsuarioDB, ['nombre', 'edad', 'direccion', 'email']);
+        let user = _.pick(UsuarioDB, ['nombre', 'edad', 'direccion', 'email', '_id']);
         res.json({
             user
         });
@@ -83,15 +84,18 @@ app.put('/usuario/:id', (req, res) => {
 
 });
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', verificaToken, (req, res) => {
     let id = req.params.id;
+    //let id = req.usuario.id;
     console.log(`Imprimo ${id}`);
     //Usuario.findByIdAndRemove((err, usuarioBorrado) => {
     let cambiaEstado = {
         estado: false
-    }
+    };
 
-    Usuario.findByIdAndUpdate(id, { cambiaEstado }, { new: true }, (err, usuarioDB) => {
+    console.log(cambiaEstado);
+
+    Usuario.findByIdAndUpdate(id, { estado: false }, { new: true }, (err, usuarioDB) => {
 
         if (err)
             return res.status(400).json({
@@ -108,7 +112,7 @@ app.delete('/usuario/:id', (req, res) => {
         let user = usuarioDB;
         res.json({
             ok: true,
-            usuarioDB
+            user
         });
     });
 
