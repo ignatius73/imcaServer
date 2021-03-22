@@ -1,5 +1,5 @@
 const express = require('express');
-const Usuario = require('../models/usuario');
+const Alumno = require('../../models/alumno');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const _ = require('underscore');
@@ -9,7 +9,7 @@ app.post('/login', (req, res) => {
     console.log(req.body);
     let body = req.body;
 
-    Usuario.findOne({ email: body.email }, (err, user) => {
+    Alumno.findOne({ email: body.email }, (err, user) => {
         if (err)
             return res.status(500).json({
                 ok: false,

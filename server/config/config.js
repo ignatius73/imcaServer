@@ -9,7 +9,7 @@ process.env.SEED = process.env.SEED || "River-Plate-Tu-Grato-Nombre";
 let mongoURL;
 
 if (process.env.NODE_ENV === "dev") {
-    mongoURL = 'mongodb://localhost:27017/usuario';
+    mongoURL = 'mongodb://localhost:27017/imca';
 } else {
 
     mongoURL = process.env.mongo_uri;

@@ -1,19 +1,26 @@
 require('./config/config');
 
 
-
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongo = require('mongoose');
+const cors = require('cors');
 
 
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
+mongo.set('useFindAndModify', false);
 
 // parse application/json
 app.use(bodyParser.json());
+app.use(cors());
 app.use(require('./rutas/index'));
+
+
+//Habilitar carpeta public
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 
 // parse application/x-www-form-urlencoded

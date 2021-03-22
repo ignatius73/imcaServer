@@ -1,0 +1,20 @@
+.contenedor {
+    display: flex;
+    flex-direction: column;
+}
+
+.portada {
+    height: 100vh;
+}
+
+.pagina1 {
+    width: 50vw;
+    line-height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.foto {
+    width: 100vw;
+    height: 100vh;
+}
