@@ -36,6 +36,10 @@ let AlumnoSchema = new Schema({
         unique: true,
         required: [true, "Campo obligatorio"]
     },
+    telefono: {
+        type: String
+
+    },
     img: {
         type: String
     }
