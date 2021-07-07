@@ -10,14 +10,17 @@ const cors = require('cors');
 
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
 mongo.set('useFindAndModify', false);
 
 // parse application/json
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 app.use(cors());
 app.use(require('./rutas/index'));
-
+app.use('/rest', require('./rutas/alumno'));
 
 //Habilitar carpeta public
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -29,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 //const port = process.env.PORT || 3000;
 
 //app.use(express.static(__dirname + '/public'));
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
 
     let obj = {
         nombre: 'Gabriel',
@@ -39,7 +42,7 @@ app.get('/', (req, res) => {
 
     res.json(obj);
 
-});
+});*/
 
 
 
