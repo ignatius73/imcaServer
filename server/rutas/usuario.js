@@ -236,6 +236,8 @@ app.get('/api/saldo', function(req, res) {
                 suma: sum,
                 datos: mov
             };
+
+
             res.json({ devol });
         }).sort({ '_id': 'desc' });
 
@@ -245,8 +247,9 @@ app.get('/api/saldo', function(req, res) {
 app.post('/api/editaAlumno', function(req, res) {
     let body = req.body;
 
+
     let user = _.pick(body, ['nombre', 'edad', 'direccion']);
-    Alumno.findByIdAndUpdate({ _id: body._id }, { $set: req.body }, { new: true, runValidators: true }, (err, AlumnoDB) => {
+    Alumno.findOneAndUpdate(req.body._id, { $set: req.body }, { new: true }, function(err, AlumnoDB) {
         if (err)
             return res.sendStatus(400).json({
                 ok: false,
@@ -254,12 +257,11 @@ app.post('/api/editaAlumno', function(req, res) {
             });
         let user = _.pick(AlumnoDB, ['nombre', 'edad', 'direccion', 'email', '_id']);
         res.json({
-            user,
-            '_id': body._id,
-            body
+            user
+
         });
     });
-    //});
+
 });
 
 
