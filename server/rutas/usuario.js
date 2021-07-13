@@ -45,6 +45,8 @@ app.get('/usuario', verificaToken, (req, res) => {
 });
 
 
+
+
 app.post('/usuario', [verificaToken, verificaRol], (req, res) => {
 
     let body = req.body;
@@ -71,9 +73,9 @@ app.post('/usuario', [verificaToken, verificaRol], (req, res) => {
 
 });
 
-app.put('/usuario/:id', [verificaToken, verificaRol], (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaRol], function(req, res) {
     let body = req.body;
-    let id = req.params.id;
+    let id = body._id;
     let user = _.pick(body, ['nombre', 'edad', 'direccion']);
     Alumno.findByIdAndUpdate(id, user, { new: true, runValidators: true }, (err, UsuarioDB) => {
         if (err)
@@ -137,6 +139,21 @@ app.get('/api/usuarios', function(req, res) {
     });
 });
 
+app.post('/alumno', function(req, res) {
+
+    if (!req.body) {
+        return res.sendStatus(400).json({
+            ok: false,
+            message: "No recibí nada en el body"
+        });
+    }
+    // Obtengo el req y lo imprimo
+    let requ = req.body;
+
+    res.json({ 'q': requ });
+
+});
+
 app.post('/api/nuevoAlumno', function(req, res) {
     if (!req.body) {
         res.sendStatus(400).json({
@@ -157,7 +174,7 @@ app.post('/api/nuevoAlumno', function(req, res) {
 
 app.post('/api/movimientoCaja', (req, res) => {
     if (!req.body) {
-        res.sendStatus(400).json({
+        return res.sendStatus(400).json({
             ok: false,
             message: "No recibí nada en el body",
 
@@ -219,16 +236,34 @@ app.get('/api/saldo', function(req, res) {
                 suma: sum,
                 datos: mov
             };
+
+
             res.json({ devol });
         }).sort({ '_id': 'desc' });
 
 
 });
 
-/*app.post('/api/nuevoMovimiento', function ( req, res) {
+app.post('/api/editaAlumno', function(req, res) {
     let body = req.body;
 
-});*/
+
+    let user = _.pick(body, ['nombre', 'edad', 'direccion']);
+    Alumno.findOneAndUpdate(req.body._id, { $set: req.body }, { new: true }, function(err, AlumnoDB) {
+        if (err)
+            return res.sendStatus(400).json({
+                ok: false,
+                err
+            });
+        let user = _.pick(AlumnoDB, ['nombre', 'edad', 'direccion', 'email', '_id']);
+        res.json({
+            user
+
+        });
+    });
+
+});
+
 
 
 
