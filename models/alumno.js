@@ -8,7 +8,7 @@ let roles = {
 };
 let Schema = mongo.Schema;
 
-let AlumnoSchema = new Schema({
+/*let AlumnoSchema = new Schema({
     nombre: {
         type: String,
         required: [true, "Campo Obligatorio"]
@@ -35,6 +35,40 @@ let AlumnoSchema = new Schema({
         type: String,
         unique: true,
         required: [true, "Campo obligatorio"]
+    },
+    telefono: {
+        type: String
+
+    },
+    img: {
+        type: String
+    }
+
+});*/
+
+let AlumnoSchema = new Schema({
+    nombre: {
+        type: String
+    },
+    apellido: {
+        type: String
+    },
+    edad: {
+        type: Number
+    },
+
+    dni: {
+        type: Number,
+        unique: true
+
+    },
+    direccion: {
+        type: String
+
+    },
+    email: {
+        type: String,
+        unique: true
     },
     telefono: {
         type: String
