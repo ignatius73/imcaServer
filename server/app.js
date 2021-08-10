@@ -23,13 +23,17 @@ app.use(require('./rutas/index'));
 //Habilitar carpeta public
 app.use(express.static(path.resolve(__dirname, '../public')));
 
-
+try {
 mongo.connect(process.env.URLDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 const db = mongo.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log('Conectado a MongoDB!');
-});
+});   
+} catch (error) {
+    console.log('Mongo Connection error');
+}
+
 app.listen(process.env.PORT, () => {
     console.log(`Escuchando en el puerto ${process.env.PORT}`);
 });
