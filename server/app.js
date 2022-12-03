@@ -1,5 +1,5 @@
+require('dotenv').config();
 require('./config/config');
-
 
 const path = require('path');
 const express = require('express');
@@ -10,6 +10,7 @@ const cors = require('cors');
 
 
 const app = express();
+console.log(process.env.URLDB)
 
 mongo.set('useFindAndModify', false);
 

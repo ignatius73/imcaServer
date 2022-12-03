@@ -264,6 +264,28 @@ app.post('/api/editaAlumno', function(req, res) {
 
 });
 
+app.post('/api/ListMovCajaAlumno', async (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400).json({
+            ok: false,
+            message: "No recibí el id de alumno",
+
+        });
+    }
+    console.log(req.body.idUsuario);
+    await Recibo.find({idUsuario:req.body.idUsuario}, function(err, recibos){
+        if(err) res.json({
+            error: 'No se encontró el alumno'
+        })
+        res.json({
+            recibos
+        })
+
+    })
+    
+
+});
+
 
 
 
