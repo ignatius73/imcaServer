@@ -11,7 +11,7 @@ process.env.SEED = process.env.SEED || "River-Plate-Tu-Grato-Nombre";
 let mongoURL;
 
 if (process.env.NODE_ENV === "dev") {
-    mongoURL = 'mongodb+srv://ignatius73:OCqu013s29Ywfrk9@cluster0.j7iqv.mongodb.net/imca-app';
+    mongoURL = process.env.mongo_uri;
 } else {
 
     mongoURL = process.env.mongo_uri;

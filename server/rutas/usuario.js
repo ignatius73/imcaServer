@@ -252,13 +252,15 @@ app.put('/api/editaAlumno', function(req, res) {
 
     let user = _.pick(body, ['nombre', 'edad', 'direccion']);
     console.log(user);
-    Alumno.findOneAndUpdate(_id, { $set: body }, { new: true }, function(err, AlumnoDB) {
+    Alumno.updateOne({_id: _id}, { $set: body }, { new: true }, function(err, AlumnoDB) {
         if (err)
             return res.sendStatus(400).json({
                 ok: false,
                 err
             });
+        console.log(`AlumnoDB => ${AlumnoDB}`);    
         let user = _.pick(AlumnoDB, ['nombre', 'edad', 'direccion', 'email', '_id']);
+        console.log(user);
         res.json({
             user
 
