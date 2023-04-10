@@ -244,12 +244,15 @@ app.get('/api/saldo', function(req, res) {
 
 });
 
-app.post('/api/editaAlumno', function(req, res) {
-    let body = req.body;
-
+app.put('/api/editaAlumno', function(req, res) {
+    console.log(req.body);
+    let { _id, ...body } = req.body
+    delete body.dni
+    delete body.email
 
     let user = _.pick(body, ['nombre', 'edad', 'direccion']);
-    Alumno.findOneAndUpdate(req.body._id, { $set: req.body }, { new: true }, function(err, AlumnoDB) {
+    console.log(user);
+    Alumno.findOneAndUpdate(_id, { $set: body }, { new: true }, function(err, AlumnoDB) {
         if (err)
             return res.sendStatus(400).json({
                 ok: false,
