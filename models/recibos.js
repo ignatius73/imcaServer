@@ -24,6 +24,12 @@ let ReciboSchema = new Schema({
         type: Number,
         required: [true, 'Campo Obligatorio']
     },
+    apellidoUsuario:{
+        type:String
+    },
+    nombreUsuario:{
+        type:String
+    },
 
     nroRecibo: {
         type: Number,
