@@ -20,5 +20,5 @@ if (process.env.NODE_ENV === "dev") {
 
     mongoURL = process.env.mongo_uri;
 }
-
+console.log(mongoURL)
 process.env.URLDB = mongoURL;
