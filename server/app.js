@@ -10,7 +10,6 @@ const cors = require('cors');
 
 
 const app = express();
-console.log(process.env.URLDB)
 
 mongo.set('useFindAndModify', false);
 
@@ -36,5 +35,5 @@ db.once('open', function() {
 }
 
 app.listen(process.env.PORT, () => {
-    console.log(`Escuchando en el puerto ${process.env.PORT}`);
+    console.log(`Escuchando peticiones...`);
 });
