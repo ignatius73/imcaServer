@@ -35,6 +35,11 @@ let ReciboSchema = new Schema({
         type: Number,
         required: [true, 'NroRecibo es obligatorio']
 
+    },
+
+    fechaRecibo: {
+            type: Date,
+            default: Date.now()
     }
 
 

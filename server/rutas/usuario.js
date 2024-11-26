@@ -282,6 +282,7 @@ app.post('/api/ListMovCajaAlumno', async (req, res) => {
         if(err) res.json({
             error: 'No se encontró el alumno'
         })
+        console.log(recibos)
         res.json({
             recibos
         })
@@ -290,6 +291,38 @@ app.post('/api/ListMovCajaAlumno', async (req, res) => {
     
 
 });
+
+/* app.post('/api/mantenimientoDate', async (req, res) => {
+
+    await setDateToReceipt();
+    res.json({
+        ok:"Trabajo terminado..."
+    })
+});
+
+async function setDateToReceipt() {
+    await Caja.find({}, function(err, cajas){
+        if(err) res.json({
+            error: 'No se encontró la caja'
+        })
+        
+        cajas.forEach(element => {
+            const nroRecibo = element.detalle.split(" ")
+            const fecha = element.fecha
+            const nroReciboCaja = Number(nroRecibo[1])
+            console.log(typeof(nroReciboCaja))
+            console.log(nroReciboCaja)
+            Recibo.updateMany(
+                {nroRecibo:nroReciboCaja},{ fechaRecibo:fecha},function(err, recibos){
+                    if (err){
+                        console.log(err)
+                        return
+                    }
+                    //console.log("Updated Docs : ", recibos)
+                })
+        })
+    })
+} */
 
 
 
