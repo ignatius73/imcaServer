@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "dev") {
     //mongoURL = process.env.mongo_uri_test; 
     //BD PrOD
     mongoURL = process.env.mongo_uri;
-    console.log(mongoURL);
+
 } else {
 
     mongoURL = process.env.mongo_uri;

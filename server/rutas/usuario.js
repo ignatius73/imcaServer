@@ -245,13 +245,11 @@ app.get('/api/saldo', function(req, res) {
 });
 
 app.put('/api/editaAlumno', function(req, res) {
-    console.log(req.body);
-    let { _id, ...body } = req.body
-    delete body.dni
-    delete body.email
+
+    let { _id, ...body } = req.body.alumno
 
     let user = _.pick(body, ['nombre', 'edad', 'direccion']);
-    console.log(user);
+
     Alumno.updateOne({_id: _id}, { $set: body }, { new: true }, function(err, AlumnoDB) {
         if (err)
             return res.sendStatus(400).json({
@@ -260,7 +258,7 @@ app.put('/api/editaAlumno', function(req, res) {
             });
         console.log(`AlumnoDB => ${AlumnoDB}`);    
         let user = _.pick(AlumnoDB, ['nombre', 'edad', 'direccion', 'email', '_id']);
-        console.log(user);
+
         res.json({
             user
 
