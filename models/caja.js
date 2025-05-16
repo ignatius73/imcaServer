@@ -12,7 +12,7 @@ let Schema = mongo.Schema;
 let CajaSchema = new Schema({
     fecha: {
         type: Date,
-        default: Date.now()
+        /*default: Date.now()*/
     },
     movimiento: {
         type: String,

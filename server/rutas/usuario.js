@@ -181,6 +181,12 @@ app.post('/api/movimientoCaja', (req, res) => {
         });
     }
     let body = req.body;
+    // Convertir fecha a ISOString UTC-3
+    const dateUtc3 = new Date(body.fecha);
+    dateUtc3.setHours(dateUtc3.getHours() - 3);
+    body.fecha = dateUtc3.toISOString();
+
+    
     const caja = new Caja(body);
     caja.save(caja, function(err, caja) {
         if (err) return res.json(err);
@@ -205,6 +211,7 @@ app.post('/api/nuevoRecibo', (req, res) => {
         console.log(typeof(body.detalles));
         console.log(typeof(body.importes));
         body.nroRecibo = nrorecibo.sequence_value;
+        body.fechaRecibo = new Date(Date.now() - (3 * 60 * 60 * 1000)).toISOString();
         recibo = new Recibo(body);
         recibo.save(recibo, function(err, recibo) {
             if (err) return res.json(err);
@@ -231,7 +238,7 @@ app.get('/api/saldo', function(req, res) {
                 return memo + reading.importe;
 
             }, 0);
-            console.log(sum);
+
             let devol = {
                 suma: sum,
                 datos: mov
@@ -239,7 +246,7 @@ app.get('/api/saldo', function(req, res) {
 
 
             res.json({ devol });
-        }).sort({ '_id': 'desc' });
+        }).sort({ 'fecha': 'desc' });
 
 
 });
