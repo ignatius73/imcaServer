@@ -246,7 +246,7 @@ app.get('/api/saldo', function(req, res) {
 
 
             res.json({ devol });
-        }).sort({ 'fecha': 'desc' });
+        }).sort({ '_id': 'desc' });
 
 
 });
