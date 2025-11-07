@@ -126,7 +126,7 @@ app.delete('/usuario/:id', verificaToken, (req, res) => {
 
 });
 
-app.get('/api/usuarios', function(req, res) {
+app.get('/api/usuarios', verificaToken, function(req, res) {
     Alumno.find({}, function(err, alumnos) {
         if (err) {
             res.sendStatus(400).json({
@@ -139,7 +139,7 @@ app.get('/api/usuarios', function(req, res) {
     });
 });
 
-app.post('/alumno', function(req, res) {
+app.post('/alumno', verificaToken, function(req, res) {
 
     if (!req.body) {
         return res.sendStatus(400).json({
@@ -154,7 +154,7 @@ app.post('/alumno', function(req, res) {
 
 });
 
-app.post('/api/nuevoAlumno', function(req, res) {
+app.post('/api/nuevoAlumno', verificaToken, function(req, res) {
     if (!req.body) {
         res.sendStatus(400).json({
             ok: false,
@@ -172,7 +172,7 @@ app.post('/api/nuevoAlumno', function(req, res) {
     });
 });
 
-app.post('/api/movimientoCaja', (req, res) => {
+app.post('/api/movimientoCaja', verificaToken, (req, res) => {
     if (!req.body) {
         return res.sendStatus(400).json({
             ok: false,
@@ -186,7 +186,7 @@ app.post('/api/movimientoCaja', (req, res) => {
     dateUtc3.setHours(dateUtc3.getHours() - 3);
     body.fecha = dateUtc3.toISOString();
 
-    
+
     const caja = new Caja(body);
     caja.save(caja, function(err, caja) {
         if (err) return res.json(err);
@@ -196,7 +196,7 @@ app.post('/api/movimientoCaja', (req, res) => {
     });
 
 });
-app.post('/api/nuevoRecibo', (req, res) => {
+app.post('/api/nuevoRecibo', verificaToken, (req, res) => {
 
     let body = req.body;
     console.log(req.body);
@@ -229,7 +229,7 @@ app.post('/api/nuevoRecibo', (req, res) => {
 });
 
 
-app.get('/api/saldo', function(req, res) {
+app.get('/api/saldo', verificaToken, function(req, res) {
 
     Caja.find({},
         function(err, mov) {
@@ -251,7 +251,7 @@ app.get('/api/saldo', function(req, res) {
 
 });
 
-app.put('/api/editaAlumno', function(req, res) {
+app.put('/api/editaAlumno', verificaToken, function(req, res) {
 
     let { _id, ...body } = req.body.alumno
 
@@ -263,7 +263,7 @@ app.put('/api/editaAlumno', function(req, res) {
                 ok: false,
                 err
             });
-        console.log(`AlumnoDB => ${AlumnoDB}`);    
+        console.log(`AlumnoDB => ${AlumnoDB}`);
         let user = _.pick(AlumnoDB, ['nombre', 'edad', 'direccion', 'email', '_id']);
 
         res.json({
@@ -274,7 +274,7 @@ app.put('/api/editaAlumno', function(req, res) {
 
 });
 
-app.post('/api/ListMovCajaAlumno', async (req, res) => {
+app.post('/api/ListMovCajaAlumno', verificaToken, async (req, res) => {
     if (!req.body) {
         return res.sendStatus(400).json({
             ok: false,
@@ -293,7 +293,7 @@ app.post('/api/ListMovCajaAlumno', async (req, res) => {
         })
 
     })
-    
+
 
 });
 
