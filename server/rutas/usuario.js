@@ -12,10 +12,10 @@ const app = express();
 
 
 
-app.use(function timeLog(req, res, next) {
+/* app.use(function timeLog(req, res, next) {
     console.log('Time: ', Date.now());
     next();
-});
+}); */
 app.get('/usuario', verificaToken, (req, res) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
